@@ -10,6 +10,7 @@ import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm';
 import Rank from './components/Rank/Rank';
 import './App.css';
 
+// Clarifai API authentication information
 const app = new Clarifai.App({
   apiKey: 'ffae0e82726a4f91855cf68633e4b26f'
  });
@@ -30,15 +31,17 @@ class App extends React.Component {
   constructor(){
     super();
     this.state = {
-      input: '',
-      imageUrl: '',
-      box:{},
-      route: 'signin',
-      isSignedIn: false
+      input: '', // mutated by ImageLinkForm with onInputChange
+      imageUrl: '', // mutated by ImageLinkForm with onButtonSubmit
+      box:{}, // facebox mutated by ImageLinkForm with onButtonSubmit, received by FaceRecognitionBox
+      route: 'signin', // route mutated with onRouteChange
+      isSignedIn: false, // signin status mutated with onRouteChange
     }
   }
 
   calculateFaceLocation = (data) => {
+    // Description: Extracts facebox vertices from Clarifai GET and returns exact pixel locations as a box object
+    
     const clarifaiFace = data.outputs[0].data.regions[0].region_info.bounding_box;
     const image = document.getElementById('inputimage');
     const width = Number(image.width);
@@ -52,6 +55,8 @@ class App extends React.Component {
   }
 
   displayFaceBox = (box) => {
+    // Description: Receives box object, and updates box state
+    
     this.setState({box: box});
     console.log(this.state.box);
   }
