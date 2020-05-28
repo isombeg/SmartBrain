@@ -132,6 +132,14 @@ class App extends React.Component {
     }
     this.setState({route: route});
   }
+
+  onSignOut = () => {
+    this.setState({
+      input: '',
+      imageUrl: '',
+      box:{}
+    })
+  }
   
   render(){
     return (
@@ -140,7 +148,7 @@ class App extends React.Component {
           params={particlesOptions} 
         />
         
-        <Navigation onRouteChange={this.onRouteChange} isSignedIn={this.state.isSignedIn} />
+        <Navigation onRouteChange={this.onRouteChange} isSignedIn={this.state.isSignedIn} onSignOut={this.onSignOut} />
         {this.state.route === 'home' ?
           <div>
             <Logo />
