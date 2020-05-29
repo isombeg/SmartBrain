@@ -17,6 +17,10 @@
   z-index: -1;
 }
 
+.err-msg {
+  margin: 2px 0px;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;

@@ -135,10 +135,19 @@ class App extends React.Component {
 
   onSignOut = () => {
     this.setState({
+      isSignedIn: false,
       input: '',
       imageUrl: '',
       box:{}
     })
+
+    this.setState(Object.assign(this.state.user, {
+      id: '',
+      name: '',
+      email: '',
+      entries: 0,
+      joined: ''
+    }))
   }
   
   render(){
