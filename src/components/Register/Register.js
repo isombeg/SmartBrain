@@ -1,4 +1,5 @@
 import React from 'react';
+import ErrorMessage from '../ErrorMessage/ErrorMessage';
 
 class Register extends React.Component {
     constructor(props){
@@ -7,7 +8,7 @@ class Register extends React.Component {
             registerName: '',
             registerEmail: '',
             registerPassword: '',
-            errorMessage: 'test'
+            errorState: 0
         }
     }
 
@@ -27,7 +28,7 @@ class Register extends React.Component {
         
         // Validate input 
         if(!this.state.registerEmail || !this.state.registerName || !this.state.registerPassword){
-            return this.setState({errorMessage: "No empty fields"});
+            return this.setState({errorState: 1});
         }
         
         fetch('http://localhost:3001/register', {
@@ -85,9 +86,7 @@ class Register extends React.Component {
                                 />
                             </div>
                         </fieldset>
-                        <div className="lh-copy mt1">
-                            <p href="#0" className="f6 dark-red db err-msg">{this.state.errorMessage}</p>
-                        </div>
+                        <ErrorMessage errorState={this.state.errorState} />
                         <div className="">
                             <input 
                                 onClick={this.onSubmitRegister}

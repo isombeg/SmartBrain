@@ -1,11 +1,18 @@
 import React from 'react';
+import ErrorMessage from '../ErrorMessage/ErrorMessage';
 
 class SignIn extends React.Component{
     constructor(props){
         super(props);
         this.state = {
             signInEmail: '',
-            signInPassword: ''
+            signInPassword: '',
+            // Determines if a and what error message should be displayed
+            // 0: No error message
+            // 1: "No empty fields"
+            // 2: "Email address and password do not match"
+            // 3: "Error logging in. Try again"
+            errorState: 0
         }
     }
     
@@ -18,6 +25,10 @@ class SignIn extends React.Component{
     }
 
     onSubmitSignIn = () => {
+        if(!this.state.signInEmail || !this.state.signInPassword){
+            return this.setState({errorState: 1});
+        }
+        
         fetch('http://localhost:3001/signin', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
@@ -32,8 +43,12 @@ class SignIn extends React.Component{
                     this.props.loadUser(user);
                     this.props.onRouteChange('home');
                 }
+                else this.setState({errorState: 2})
             })
+            .catch(err => this.setState({errorState: 3}))
+            
     }
+
 
     render(){
         const {onRouteChange} = this.props;
@@ -64,6 +79,7 @@ class SignIn extends React.Component{
                             />
                             </div>
                         </fieldset>
+                        <ErrorMessage errorState={this.state.errorState} />
                         <div className="">
                             <input 
                                 onClick={this.onSubmitSignIn}

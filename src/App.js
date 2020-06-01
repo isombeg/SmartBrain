@@ -95,9 +95,14 @@ class App extends React.Component {
 
   onButtonSubmit = () => {
     this.setState({imageUrl: this.state.input});
-    app.models.predict(
-      Clarifai.FACE_DETECT_MODEL,
-      this.state.input
+    fetch('http://localhost:3001/detect',
+      {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          imageUrl: this.state.imageUrl
+        })
+      }
     )
       .then(response => {
         if(response){
