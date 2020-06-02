@@ -1,6 +1,6 @@
 import React from 'react';
 import Particles from 'react-particles-js';
-import Clarifai from 'clarifai';
+// import Clarifai from 'clarifai';
 import Navigation from './components/Navigation/Navigation';
 import SignIn from './components/SignIn/SignIn';
 import Register from './components/Register/Register';
@@ -11,9 +11,9 @@ import Rank from './components/Rank/Rank';
 import './App.css';
 
 // Clarifai API authentication information
-const app = new Clarifai.App({
-  apiKey: 'ffae0e82726a4f91855cf68633e4b26f'
- });
+// const app = new Clarifai.App({
+//   apiKey: 'ffae0e82726a4f91855cf68633e4b26f'
+//  });
 
 const particlesOptions = {
   particles: {
@@ -74,6 +74,7 @@ class App extends React.Component {
     const image = document.getElementById('inputimage');
     const width = Number(image.width);
     const height = Number(image.height);
+    
     return {
       leftCol: clarifaiFace.left_col * width,
       topRow: clarifaiFace.top_row * height,
@@ -104,7 +105,10 @@ class App extends React.Component {
         })
       }
     )
-      .then(response => {
+    .catch(console.log)
+    .then(resp => resp.json())
+    .catch(console.log) 
+    .then(response => {
         if(response){
           fetch(
             'http://localhost:3001/image',
