@@ -10,11 +10,6 @@ import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm';
 import Rank from './components/Rank/Rank';
 import './App.css';
 
-// Clarifai API authentication information
-// const app = new Clarifai.App({
-//   apiKey: 'ffae0e82726a4f91855cf68633e4b26f'
-//  });
-
 const particlesOptions = {
   particles: {
     number: {
@@ -45,12 +40,6 @@ class App extends React.Component {
         joined: ''
       }
     }
-  }
-
-  componentDidMount(){
-    fetch('http://localhost:3001')
-      .then(response => response.json())
-      .then(console.log)
   }
 
   loadUser = (data) => {
@@ -85,9 +74,7 @@ class App extends React.Component {
 
   displayFaceBox = (box) => {
     // Description: Receives box object, and updates box state
-    
     this.setState({box: box});
-    console.log(this.state.box);
   }
   
   onInputChange = (event) => {
@@ -96,22 +83,21 @@ class App extends React.Component {
 
   onButtonSubmit = () => {
     this.setState({imageUrl: this.state.input});
-    fetch('http://localhost:3001/detect',
+    fetch('https://pure-plains-68415.herokuapp.com/detect',
       {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
-          imageUrl: this.state.imageUrl
+          imageUrl: this.state.input
         })
       }
     )
-    .catch(console.log)
-    .then(resp => resp.json())
-    .catch(console.log) 
+    .catch()
+    .then(response => response.json())
     .then(response => {
-        if(response){
+      if(response){
           fetch(
-            'http://localhost:3001/image',
+            'https://pure-plains-68415.herokuapp.com/image',
             {
               method: 'PUT',
               headers: {'Content-Type': 'application/json'},

@@ -19,11 +19,21 @@ const ErrorMessage = ({errorState}) => {
         )
     }
 
-    else return (
-        <div className="lh-copy mt1">
-            <p href="#0" className="f6 dark-red db err-msg">Error logging in. Try again</p>
-        </div>
-    )
+    else if(errorState === 3){
+        return (
+            <div className="lh-copy mt1">
+                <p href="#0" className="f6 dark-red db err-msg">Error logging in. Try again</p>
+            </div>
+        )
+    }
+
+    else if(errorState === 4){
+        return (
+            <div className="lh-copy mt1">
+                <p href="#0" className="f6 dark-red db err-msg">Error registering. Try again</p>
+            </div>
+        )
+    }
 }
 
 export default ErrorMessage;

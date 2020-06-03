@@ -31,7 +31,7 @@ class Register extends React.Component {
             return this.setState({errorState: 1});
         }
         
-        fetch('http://localhost:3001/register', {
+        fetch('https://pure-plains-68415.herokuapp.com/register', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
@@ -43,8 +43,12 @@ class Register extends React.Component {
             .catch()
             .then(response => response.json())
             .then(user => {
-                this.props.loadUser(user);
-                this.props.onRouteChange('home');
+                if(user !== 'Unable to register'){
+                    this.props.loadUser(user);
+                    this.props.onRouteChange('home');
+                }
+
+                else this.setState({errorState: 4});
             })
     }
     
